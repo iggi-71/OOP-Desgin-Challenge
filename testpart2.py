@@ -1,7 +1,12 @@
 import random
-import sys 
 from words import word_list_cs
 from words import word_list_nfl
+
+
+# def get_word():     #selects random number that is from the words file and is turned to all uppercase
+#     word = random.choice(word_list_cs)
+#     return word.upper()
+
 
 
 # this is the host of the game
@@ -31,81 +36,40 @@ class Host:
         return day
 
 host = Host("Steve", "Sunday")
-hostt = Host("iggi", 10).changeHost("steve") #this is what changes the names of the host
+hostt = Host("iggi", 10).changeHost("steve")
 
 day = Host("Steve", "Sunday")
-days = Host("iggi", 10).changeDay("friday") #this is what changes the days
+days = Host("iggi", 10).changeDay("friday")
 
 
 
 class Player:
-    def __init__(self, name, word, score): 
+    def __init__(self, name, topic, score): 
         self.name = name
-        self.word = word
+        self.topic = topic
         self.score = score
 
     def highScore(self, score):
         print("High score is " + str(score))
 
-    def selectTopic(self, word):
-        select = int(input("would you the topic to be about: \n 1. Computer Science \n 2. NFL Players \n Input Number Here: "))
-        x = random.randint(0,16)
+    def selectTopic(self, topic):
+        select = input("would you the topic to be about: \n 1. Computer Science \n 2. NFL Players \n Input Number Here: ")
         if select == 1:
-            word = word_list_cs[x]
+            topic = word_list_cs[0]
         elif select == 2:
-            word = word_list_nfl[x]
+            topic = word_list_nfl
         else:
-            word = word_list_cs[x]
-        return word
+            topic = word_list_cs[0]
+        return topic
 
-score = 0
-p1 = Player("iggi", "cs", 0)
-p2 = Player("tim", "cs", 0)
+
+p1 = Player("iggi", "cs", 2)
 
 '''
 def get_word():     #selects random number that is from the words file and is turned to all uppercase
     word = random.choice(word_list_cs)
     return word.upper()
 '''
-
-class Multiplayer: # get the names of the players as well as the score of each player
-    def __init__(self, name, number): 
-        self.name = name
-        self.number = number
-
-    def twoPlayer(self):
-        start = int(input("who would like to start the game,\n 1 = player one \n 2 = player two \n"))
-        if start == 1:
-            print("player one will play this turn")
-            postion = 1
-        elif start == 2:
-            print("player two will play this turn")
-            postion = 2
-        else:
-            print("player one will start this turn")
-        return postion
-
-    def whoNext(self):
-        start = 0
-        if start == 1:
-            print(p1.name + "'s turn to play")
-        else:
-            print(p2.name + "'s turn to play")
-        return start
-
-    
-
-class Menu:
-    def __init__(self, start, end): 
-        self.start = start
-        self.end = end
-    
-    def startGame(self):
-        choice = input("would you like to start the game? :").upper()
-        if choice == "YES":
-            pass
-        else:
-            sys.exit()
 
 
 def play(word):
@@ -118,7 +82,7 @@ def play(word):
     print(word_completion)
     print("\n")
     while not guessed and tries > 0:    #only runs if the amount of tries is greater than 1
-        guess = input("Please guess a letter or word: ")
+        guess = input("Please guess a letter or word: ").upper()
         if len(guess) == 1 and guess.isalpha():
             if guess in guessed_letters:    #this is if you already guess the letter
                 print("You already guessed the letter", guess)
@@ -233,11 +197,9 @@ def display_hangman(tries):
 
 
 def main():
-    Menu("start", "end").startGame()
-    Multiplayer("name", 1).twoPlayer()
-    word = Player("iggi", "10", 0).selectTopic("cs")
+    # p1.selectTopic("cs")
+    word = str(Player("iggi", "10", 0).selectTopic("cs"))
     play(word)
-    Multiplayer("iggi", 10).whoNext()
     while input("Play Again? (Y/N) ").upper() == "Y":
         word = str(Player("iggi", "10", 0).selectTopic("cs"))
         play(word)
