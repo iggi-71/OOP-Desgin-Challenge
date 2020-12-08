@@ -1,10 +1,15 @@
 import random
-from words import word_list
+from words import word_list_cs
+from words import name_list
 
 
-def get_word():
-    word = random.choice(word_list)
+def get_word():     #selects random number that is from the words file and is turned to all uppercase
+    word = random.choice(word_list_cs)
     return word.upper()
+
+def get_name():
+    name = random.choice(name_list)
+    return name.upper()
 
 
 # this is the host of the game
@@ -17,18 +22,20 @@ class Host:
         print("Hello my name is " + self.name + ", and I'm your Host")
         print("Let's play Hangman!")
 
-    def hostStart(self):
-        num = random.randint(0, 3)
-        if num == 1:
-            name = "Steve"
-        elif num == 2:
-            name = "Betty"
-        else:
-            pass
-        return name
-
 hostOne = Host("Steve", 40)
 hostTwo = Host("Betty", 35)
+
+class Player:
+    def __init__(self, name, age, score): 
+        self.name = name
+        self.age = age
+        self.score = score
+
+    def highScore(self, score):
+        print("High score is " + str(score))
+
+p1 = Player("iggi", 19, 2)
+
 
 
 def play(word):
@@ -40,15 +47,15 @@ def play(word):
     print(display_hangman(tries))
     print(word_completion)
     print("\n")
-    while not guessed and tries > 0:
+    while not guessed and tries > 0:    #only runs if the amount of tries is greater than 1
         guess = input("Please guess a letter or word: ").upper()
         if len(guess) == 1 and guess.isalpha():
-            if guess in guessed_letters:
+            if guess in guessed_letters:    #this is if you already guess the letter
                 print("You already guessed the letter", guess)
-            elif guess not in word:
+            elif guess not in word:     #if the letter guessed is not in the list
                 print(guess, "is not in the word.")
-                tries -= 1
-                guessed_letters.append(guess)
+                tries -= 1      #you get 6 tries if you guess a letter that is not in the word it subtractes a 1
+                guessed_letters.append(guess)   #the guess is then added to words guessed list
             else:
                 print("Good job,", guess, "is in the word!")
                 guessed_letters.append(guess)
@@ -164,4 +171,6 @@ def main():
 
 
 if __name__ == "__main__":
+    p1.highScore(0)
+    hostOne.greet()
     main()
