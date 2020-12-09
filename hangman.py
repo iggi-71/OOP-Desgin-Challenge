@@ -93,7 +93,7 @@ class Multiplayer: # get the names of the players as well as the score of each p
             print(p2.name + "'s turn to play")
         return start
 
-    
+
 
 class Menu:
     def __init__(self, start, end): 
@@ -107,24 +107,28 @@ class Menu:
         else:
             sys.exit()
 
+    def endGame(self):
+        sys.exit()
+
+
 
 def play(word):
     word_completion = "_" * len(word)
     guessed = False
     guessed_letters = []
     guessed_words = []
-    tries = 6
-    print(display_hangman(tries))
+    __tries = 6
+    print(display_hangman(__tries))
     print(word_completion)
     print("\n")
-    while not guessed and tries > 0:    #only runs if the amount of tries is greater than 1
+    while not guessed and __tries > 0:    #only runs if the amount of tries is greater than 1
         guess = input("Please guess a letter or word: ")
         if len(guess) == 1 and guess.isalpha():
             if guess in guessed_letters:    #this is if you already guess the letter
                 print("You already guessed the letter", guess)
             elif guess not in word:     #if the letter guessed is not in the list
                 print(guess, "is not in the word.")
-                tries -= 1      #you get 6 tries if you guess a letter that is not in the word it subtractes a 1
+                __tries -= 1      #you get 6 tries if you guess a letter that is not in the word it subtractes a 1
                 guessed_letters.append(guess)   #the guess is then added to words guessed list
             else:
                 print("Good job,", guess, "is in the word!")
@@ -141,14 +145,14 @@ def play(word):
                 print("You already guessed the word", guess)
             elif guess != word:
                 print(guess, "is not the word.")
-                tries -= 1
+                __tries -= 1
                 guessed_words.append(guess)
             else:
                 guessed = True
                 word_completion = word
         else:
             print("Not a valid guess.")
-        print(display_hangman(tries))
+        print(display_hangman(__tries))
         print(word_completion)
         print("\n")
     if guessed:
